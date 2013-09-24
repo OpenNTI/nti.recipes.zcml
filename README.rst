@@ -76,9 +76,9 @@ Running the buildout gives us::
 	<BLANKLINE>
 	An internal error occured due to a bug in either zc.buildout or in a
 	recipe being used:
-	<BLANKLINE>
-	OSError:
-	[Errno 2] No such file or directory: '/sample-buildout/zope/etc/package-includes'
+	Traceback (most recent call last):
+	  ...
+	OSError: [Errno 2] ...
 	<BLANKLINE>
 
 We need to have a valid zope installation. Let's fake one::

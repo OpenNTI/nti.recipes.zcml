@@ -25,7 +25,7 @@ class ZCML(object):
 
 	def __init__(self, buildout, name, options):
 		self.buildout, self.name, self.options = buildout, name, options
-		if options['deployment']:
+		if 'deployment' in options:
 			options['etc'] = buildout[options['deployment']]['etc-directory']
 		else:
 			options['etc'] = options['etc-directory']
