@@ -59,7 +59,7 @@ We'll start by creating a buildout that uses the recipe::
 	...
 	... [test1]
 	... recipe = nti.recipes.zcml
-	... etc-directory = ${buildout:directory}/zope
+	... etc-directory = ${buildout:directory}/zope/etc
 	... package_location = package-includes
 	... package_zcml =
 	...		my.package
@@ -73,13 +73,7 @@ Running the buildout gives us::
 	start Installing test1.
 	While:
 	  Installing test1.
-	<BLANKLINE>
-	An internal error occured due to a bug in either zc.buildout or in a
-	recipe being used:
-	Traceback (most recent call last):
-	  ...
-	OSError: [Errno 2] ...
-	<BLANKLINE>
+	Error: The parents of '/.../sample-buildout/zope/etc/package-includes' do not exist
 
 We need to have a valid zope installation. Let's fake one::
 

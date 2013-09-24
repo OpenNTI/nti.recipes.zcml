@@ -18,7 +18,8 @@ logger = __import__('logging').getLogger(__name__)
 import os
 import shutil
 import re
-#import zc.buildout
+import zc.buildout
+import errno
 
 class ZCML(object):
 	"""zc.buildout recipe"""
@@ -59,7 +60,12 @@ class ZCML(object):
 
 			includes_path = os.path.join( etc, slug_path )
 			if not os.path.exists(includes_path):
-				os.mkdir(includes_path)
+				try:
+					os.mkdir(includes_path)
+				except OSError as e:
+					if e.errno == errno.ENOENT:
+						raise zc.buildout.UserError("The parents of '%s' do not exist" % includes_path)
+					raise
 
 			zcml = zcml.split()
 			if '*' in zcml:
