@@ -53,6 +53,8 @@ class ZCML(object):
 			slug_name = key[:-5]
 			slug_path = options[slug_name + '_location']
 			slug_default_filename = options.get( slug_name + '_file', 'configure' )
+			slug_features = options.get( slug_name + '_features', '' )
+			slug_features = slug_features.split(' ')
 
 			zcml = options[key]
 			if not zcml:
@@ -73,6 +75,13 @@ class ZCML(object):
 			else:
 				shutil.rmtree(includes_path)
 				os.mkdir(includes_path)
+
+			if slug_features:
+				features_zcml = '\n'.join( ['<meta:provides feature="%s" />' % i
+											for i in slug_features] )
+				path = os.path.join( includes_path, '000-features.zcml' )
+				with open(path, 'w') as f:
+					f.write( features_zcml )
 
 			n = 0
 			for package in zcml:

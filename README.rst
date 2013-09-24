@@ -35,6 +35,11 @@ X_file
 	have the same ``include_name``. Set this option to make it the
 	default instead of configure. Optional.
 
+X_features
+	If this optional directive is provided, it is a space-separated
+	list of ZCML features that should be provided when the output
+	directory is processed. These are provided in the first file.
+
 There are two global options:
 
 deployment
@@ -43,7 +48,7 @@ deployment
 	in this part as the base for locations.
 
 etc-directory
-	If you do not specify a deployment, then this value will
+	If you do not specify a ``deployment``, then this value will
 	be used as the etc-directory.
 
 
@@ -61,6 +66,7 @@ We'll start by creating a buildout that uses the recipe::
 	... recipe = nti.recipes.zcml
 	... etc-directory = ${buildout:directory}/zope/etc
 	... package_location = package-includes
+	... package_features = foo bar baz
 	... package_zcml =
 	...		my.package
 	...		somefile:my.otherpackage
@@ -75,7 +81,7 @@ Running the buildout gives us::
 	  Installing test1.
 	Error: The parents of '/.../sample-buildout/zope/etc/package-includes' do not exist
 
-We need to have a valid zope installation. Let's fake one::
+We need to have a valid etc directory. Let's create one::
 
 	>>> mkdir("zope")
 	>>> mkdir("zope", "etc")
@@ -90,12 +96,17 @@ We now have a package include directory::
 It does contain ZCML slugs::
 
 	>>> ls("zope", "etc", "package-includes")
+	-  000-features.zcml
 	-  001-my.package-configure.zcml
 	-  002-somefile-configure.zcml
 	-  003-my.thirdpackage-meta.zcml
 
 These  files contain the usual stuff::
 
+	>>> cat("zope", "etc", "package-includes", "000-features.zcml")
+	<meta:provides feature="foo" />
+	<meta:provides feature="bar" />
+	<meta:provides feature="baz" />
 	>>> cat("zope", "etc", "package-includes", "001-my.package-configure.zcml")
 	<include package="my.package" file="configure.zcml" />
 	>>> cat("zope", "etc", "package-includes", "002-somefile-configure.zcml")
