@@ -77,7 +77,7 @@ class ZCML(object):
 				os.mkdir(includes_path)
 
 			if slug_features:
-				features_zcml = '\n'.join( ['<meta:provides feature="%s" />' % i
+				features_zcml = '\n'.join( ['<meta:provides feature="%s" xmlns:meta="http://namespaces.zope.org/meta" />' % i
 											for i in slug_features] )
 				path = os.path.join( includes_path, '000-features.zcml' )
 				with open(path, 'w') as f:
