@@ -37,7 +37,8 @@ setup(
 	install_requires=[
 		'setuptools',
 		'manuel', # really test
-		'zc.buildout'
+		'zc.buildout',
+		'zc.recipe.deployment'
 	],
 	entry_points=entry_points
 )
