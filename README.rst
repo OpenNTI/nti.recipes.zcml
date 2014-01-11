@@ -36,9 +36,10 @@ X_file
 	default instead of configure. Optional.
 
 X_features
-	If this optional directive is provided, it is a space-separated
-	list of ZCML features that should be provided when the output
-	directory is processed. These are provided in the first file.
+	If this optional directive is provided, it is a space and newline
+	separated list of ZCML features that should be provided when the
+	output directory is processed. These are provided in the first
+	file.
 
 There are two global options:
 
@@ -66,7 +67,8 @@ We'll start by creating a buildout that uses the recipe::
 	... recipe = nti.recipes.zcml
 	... etc-directory = ${buildout:directory}/zope/etc
 	... package_location = package-includes
-	... package_features = foo bar baz
+	... package_features = foo bar
+	...                    baz
 	... package_zcml =
 	...		my.package
 	...		somefile:my.otherpackage

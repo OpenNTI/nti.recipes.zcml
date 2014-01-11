@@ -54,7 +54,7 @@ class ZCML(object):
 			slug_path = options[slug_name + '_location']
 			slug_default_filename = options.get( slug_name + '_file', 'configure' )
 			slug_features = options.get( slug_name + '_features', '' )
-			slug_features = slug_features.split(' ')
+			slug_features = slug_features.split()
 
 			zcml = options[key]
 			if not zcml:
