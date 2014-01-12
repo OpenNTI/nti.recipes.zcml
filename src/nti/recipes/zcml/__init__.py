@@ -77,7 +77,7 @@ class ZCML(object):
 				os.mkdir(includes_path)
 
 			if slug_features:
-				features_zcml = ['\t<meta:provides feature="%s" xmlns:meta="http://namespaces.zope.org/meta" />' % i
+				features_zcml = ['\t<meta:provides feature="%s" />' % i
 								 for i in slug_features ]
 				features_zcml.insert(0, '<configure xmlns="http://namespaces.zope.org/zope" xmlns:meta="http://namespaces.zope.org/meta">')
 				features_zcml.append("</configure>")

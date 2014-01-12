@@ -107,9 +107,9 @@ These  files contain the usual stuff::
 
 	>>> cat("zope", "etc", "package-includes", "000-features.zcml")
 	<configure xmlns="http://namespaces.zope.org/zope" xmlns:meta="http://namespaces.zope.org/meta">
-		<meta:provides feature="foo" xmlns:meta="http://namespaces.zope.org/meta" />
-		<meta:provides feature="bar" xmlns:meta="http://namespaces.zope.org/meta" />
-		<meta:provides feature="baz" xmlns:meta="http://namespaces.zope.org/meta" />
+		<meta:provides feature="foo" />
+		<meta:provides feature="bar" />
+		<meta:provides feature="baz" />
 	</configure>
 	>>> cat("zope", "etc", "package-includes", "001-my.package-configure.zcml")
 	<include package="my.package" file="configure.zcml" />
