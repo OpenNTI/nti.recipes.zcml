@@ -77,11 +77,14 @@ class ZCML(object):
 				os.mkdir(includes_path)
 
 			if slug_features:
-				features_zcml = '\n'.join( ['<meta:provides feature="%s" xmlns:meta="http://namespaces.zope.org/meta" />' % i
-											for i in slug_features] )
+				features_zcml = ['\t<meta:provides feature="%s" xmlns:meta="http://namespaces.zope.org/meta" />' % i
+								 for i in slug_features ]
+				features_zcml.insert(0, '<configure xmlns="http://namespaces.zope.org/zope" xmlns:meta="http://namespaces.zope.org/meta">')
+				features_zcml.append("</configure>")
+
 				path = os.path.join( includes_path, '000-features.zcml' )
 				with open(path, 'w') as f:
-					f.write( features_zcml )
+					f.write( '\n'.join(features_zcml) )
 
 			n = 0
 			for package in zcml:
