@@ -16,7 +16,6 @@ __docformat__ = "restructuredtext en"
 logger = __import__('logging').getLogger(__name__)
 
 import os
-import shutil
 import re
 import zc.buildout
 import errno
@@ -56,8 +55,8 @@ class ZCML(object):
 			slug_features = options.get( slug_name + '_features', '' )
 			slug_features = slug_features.split()
 
-			zcml = options[key]
-			if not zcml:
+			zcml = options[key] or ''
+			if not zcml and not slug_features:
 				continue
 
 			includes_path = os.path.join( etc, slug_path )
@@ -72,9 +71,9 @@ class ZCML(object):
 			zcml = zcml.split()
 			if '*' in zcml:
 				zcml.remove('*')
-			else:
-				shutil.rmtree(includes_path)
-				os.mkdir(includes_path)
+			# We never need to remove the whole directory, buildout
+			# will automatically uninstall any files we created in it
+			# as needed
 
 			if slug_features:
 				features_zcml = ['\t<meta:provides feature="%s" />' % i
@@ -85,6 +84,7 @@ class ZCML(object):
 				path = os.path.join( includes_path, '000-features.zcml' )
 				with open(path, 'w') as f:
 					f.write( '\n'.join(features_zcml) )
+				out.append(path)
 
 			n = 0
 			for package in zcml:

@@ -21,11 +21,6 @@ X_zcml
 	of possibilities, but that is no longer the case). If the filename
 	is not given, the ``include_name`` is used.
 
-	If the zcml list contains the special key ``*``, then the
-	directory containing the slugs is left in place and only specified
-	entries are overwritten. Otherwise (by default), the entire
-	directory is deleted and started from scratch.
-
 X_location
 	A directory name relative to the etc-directory
 	to put the generated slugs in. Required.
