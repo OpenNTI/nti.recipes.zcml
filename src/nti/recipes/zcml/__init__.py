@@ -1,24 +1,22 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-ZC.Buildout recipe for writing various ZCML include slugs.
+zc.buildout recipe for writing various ZCML include slugs.
 Originally based on collective.recipe.zcml, but modified to not
 be rigid about the type of ZCML file requested and the
 paths to which they are written. Also requires the
 use of zc.recipe.deployment.
 
-$Id$
 """
 
-from __future__ import print_function, unicode_literals, absolute_import, division
-__docformat__ = "restructuredtext en"
-
-logger = __import__('logging').getLogger(__name__)
+from __future__ import print_function, absolute_import, division
 
 import os
 import re
-import zc.buildout
 import errno
+
+import zc.buildout
+
 
 class ZCML(object):
     """zc.buildout recipe"""
@@ -66,7 +64,7 @@ class ZCML(object):
                 except OSError as e:
                     if e.errno == errno.ENOENT:
                         raise zc.buildout.UserError("The parents of '%s' do not exist" % includes_path)
-                    raise
+                    raise # pragma: no cover
 
             zcml = zcml.split()
             if '*' in zcml:
@@ -104,7 +102,8 @@ class ZCML(object):
                     filename = suff + '.zcml'
 
                 if not package_match(package):
-                    raise ValueError('Invalid zcml', orig)
+                    raise zc.buildout.UserError(
+                        "Invalid package name: '%s' parsed as '%s'" % (orig, package))
 
                 path = os.path.join(
                     includes_path,
