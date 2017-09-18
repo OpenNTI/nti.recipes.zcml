@@ -44,26 +44,26 @@ class ZCML(object):
         package_match = re.compile(r'\w+([.]\w+)*$').match
         out = []
 
-        for key in options:
-            if not key.endswith('_zcml'):
-                continue
+        for key in (k for k in options if k.endswith('_zcml')):
+            zcml = options[key] or ''
+
             slug_name = key[:-5]
             slug_path = options[slug_name + '_location']
-            slug_default_filename = options.get( slug_name + '_file', 'configure' )
-            slug_features = options.get( slug_name + '_features', '' )
+            slug_default_filename = options.get(slug_name + '_file', 'configure')
+            slug_features = options.get(slug_name + '_features', '')
             slug_features = slug_features.split()
 
-            zcml = options[key] or ''
             if not zcml and not slug_features:
                 continue
 
-            includes_path = os.path.join( etc, slug_path )
+            includes_path = os.path.join(etc, slug_path)
             if not os.path.exists(includes_path):
                 try:
                     os.mkdir(includes_path)
                 except OSError as e:
                     if e.errno == errno.ENOENT:
-                        raise zc.buildout.UserError("The parents of '%s' do not exist" % includes_path)
+                        raise zc.buildout.UserError(
+                            "The parents of '%s' do not exist" % includes_path)
                     raise # pragma: no cover
 
             zcml = zcml.split()
@@ -75,31 +75,29 @@ class ZCML(object):
 
             if slug_features:
                 features_zcml = ['\t<meta:provides feature="%s" />' % i
-                                 for i in slug_features ]
-                features_zcml.insert(0, '<configure xmlns="http://namespaces.zope.org/zope" xmlns:meta="http://namespaces.zope.org/meta">')
+                                 for i in slug_features]
+                features_zcml.insert(0,
+                                     '<configure xmlns="http://namespaces.zope.org/zope"'
+                                     ' xmlns:meta="http://namespaces.zope.org/meta">')
                 features_zcml.append("</configure>")
 
-                path = os.path.join( includes_path, '000-features.zcml' )
+                path = os.path.join(includes_path, '000-features.zcml')
                 with open(path, 'w') as f:
-                    f.write( '\n'.join(features_zcml) )
+                    f.write('\n'.join(features_zcml))
                 out.append(path)
 
-            n = 0
-            for package in zcml:
-                n += 1
+
+            for n, package in enumerate(zcml, 1):
                 orig = package
+                suff = slug_default_filename
+                filename = None
                 if ':' in package:
                     package, filename = package.split(':')
-                else:
-                    filename = None
 
                 if '-' in package:
                     package, suff = package.split('-')
-                else:
-                    suff = slug_default_filename
 
-                if filename is None:
-                    filename = suff + '.zcml'
+                filename = filename or suff + '.zcml'
 
                 if not package_match(package):
                     raise zc.buildout.UserError(
@@ -108,10 +106,10 @@ class ZCML(object):
                 path = os.path.join(
                     includes_path,
                     "%3.3d-%s-%s.zcml" % (n, package, suff),
-                    )
+                )
                 with open(path, 'w') as f:
                     f.write(
                         '<include package="%s" file="%s" />\n'
-                        % (package, filename) )
+                        % (package, filename))
                 out.append(path)
         return out

@@ -48,7 +48,6 @@ setup(
     install_requires=[
         'setuptools',
         'zc.buildout >= 2.9.4',
-        'zc.recipe.deployment'
     ],
     extras_require={
         'test': [
@@ -59,7 +58,7 @@ setup(
             'manuel',
             'zope.testing',
             'zope.testrunner'
-        ]
+        ],
     },
     url='http://github.com/NextThought/nti.recipes.zcml',
     entry_points=entry_points,

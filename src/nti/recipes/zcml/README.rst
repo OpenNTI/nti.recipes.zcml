@@ -108,7 +108,7 @@ It does contain ZCML slugs::
     -  002-somefile-configure.zcml
     -  003-my.thirdpackage-meta.zcml
 
-These  files contain the usual stuff::
+These files contain the usual stuff::
 
     >>> cat("zope", "etc", "package-includes", "000-features.zcml")
     <configure xmlns="http://namespaces.zope.org/zope" xmlns:meta="http://namespaces.zope.org/meta">
@@ -224,3 +224,31 @@ moment only the most egregious violations are detected)::
       Installing zcml.
     Error: Invalid package name: '$not_valid' parsed as '$not_valid'
     <BLANKLINE>
+
+Specifying Filenames Twice
+==========================
+
+We can specify both the ``include_name`` and the ``filename`` for a
+single entry::
+
+    >>> write('buildout.cfg',
+    ... """
+    ... [buildout]
+    ... parts = zcml
+    ...
+    ... [zcml]
+    ... recipe = nti.recipes.zcml
+    ... etc-directory = ${buildout:directory}/zope/etc
+    ... package_location = package-includes
+    ... package_zcml = my.package-foo:filename.zcml
+    ... """)
+
+    >>> print(system(buildout))
+    Installing zcml.
+
+
+    >>> ls("zope", "etc", "package-includes")
+    -  001-my.package-foo.zcml
+
+    >>> cat("zope", "etc", "package-includes", "001-my.package-foo.zcml")
+    <include package="my.package" file="filename.zcml" />
