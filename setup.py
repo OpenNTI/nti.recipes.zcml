@@ -16,7 +16,7 @@ def read(*rnames):
 
 setup(
     name='nti.recipes.zcml',
-    version='1.0.0',
+    version='1.0.1.dev0',
     author='Jason Madden',
     author_email='open-source@nextthought.com',
     description="zc.buildout recipes for writing ZCML",
