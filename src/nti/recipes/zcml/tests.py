@@ -48,5 +48,6 @@ def test_suite():
     return unittest.TestSuite((
         doctest.DocFileSuite(
             'README.rst',
-            setUp=setUp, tearDown=tearDown),
+            setUp=setUp, tearDown=tearDown,
+            optionflags=doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE),
     ))

@@ -1,5 +1,6 @@
-Supported options
-=================
+===================
+ Supported options
+===================
 
 The recipe supports installing multiple different sets
 of ZCML slugs in multiple different output directories.
@@ -48,8 +49,9 @@ etc-directory
 	be used as the etc-directory.
 
 
-Example usage
-=============
+===============
+ Example usage
+===============
 
 We'll start by creating a buildout that uses the recipe::
 
@@ -72,7 +74,7 @@ We'll start by creating a buildout that uses the recipe::
 
 Running the buildout gives us::
 
-	>>> print 'start', system(buildout) # doctest:+ELLIPSIS
+	>>> print 'start', system(buildout)
 	start Installing test1.
 	While:
 	  Installing test1.
@@ -82,7 +84,7 @@ We need to have a valid etc directory. Let's create one::
 
 	>>> mkdir("zope")
 	>>> mkdir("zope", "etc")
-	>>> print 'start', system(buildout) # doctest:+ELLIPSIS
+	>>> print 'start', system(buildout)
 	start Installing test1.
 
 We now have a package include directory::
