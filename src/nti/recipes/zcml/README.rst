@@ -82,8 +82,8 @@ be provided::
 
 Running the buildout gives us::
 
-    >>> print 'start', system(buildout)
-    start Installing test1.
+    >>> print(system(buildout))
+    Installing test1.
     While:
       Installing test1.
     Error: The parents of '/.../sample-buildout/zope/etc/package-includes' do not exist
@@ -92,8 +92,8 @@ We need to have a valid etc directory. Let's create one::
 
     >>> mkdir("zope")
     >>> mkdir("zope", "etc")
-    >>> print 'start', system(buildout)
-    start Installing test1.
+    >>> print(system(buildout))
+    Installing test1.
 
 We now have a package include directory::
 
