@@ -32,6 +32,7 @@ setup(
         'Intended Audience :: Developers',
         'Natural Language :: English',
         'Operating System :: OS Independent',
+        'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
@@ -60,7 +61,7 @@ setup(
             'zope.testrunner'
         ],
     },
-    url='http://github.com/NextThought/nti.recipes.zcml',
+    url='http://github.com/OpenNTI/nti.recipes.zcml',
     entry_points=entry_points,
     include_package_data=True,
     zip_safe=False,
